@@ -1,0 +1,11 @@
+g++ -Wall sw/mod_exp.cpp -o mod_exp
+objdump -D mod_exp > mod_exp.disasm
+./mod_exp input/sample.txt 2 10000
+Test vector 1 (10000^1%4292870399=10000) / Total elapsed time 13394 usec (average 1 usec)
+Test vector 2 (10000^2%4292870399=100000000) / Total elapsed time 13301 usec (average 1 usec)
+Test vector 3 (10000^3%4292870399=4054067432) / Total elapsed time 13758 usec (average 1 usec)
+Test vector 4 (10000^100%4292870399=4065379410) / Total elapsed time 14064 usec (average 1 usec)
+Test vector 5 (10000^1000%4292870399=3496474053) / Total elapsed time 15239 usec (average 1 usec)
+Test vector 6 (10000^10000%4292870399=812210316) / Total elapsed time 14992 usec (average 1 usec)
+Test vector 7 (10000^100000%4292870399=2410941655) / Total elapsed time 15310 usec (average 1 usec)
+Test vector 8 (10000^65535%4292870399=2614983678) / Total elapsed time 18297 usec (average 1 usec)
