@@ -23,6 +23,7 @@ module montgomery_exp_square (clk, rst, start, base_mont, exponent, N, N_prime, 
     `define STATE_IDLE   `STATE_BITS'd0
     `define STATE_SQUARE `STATE_BITS'd1
     `define STATE_MULT   `STATE_BITS'd2
+    `define STATE_DUMMY  `STATE_BITS'd3
     `define STATE_FINISH `STATE_BITS'd7
     reg [`STATE_BITS-1:0] state, next_state;
 
@@ -84,16 +85,26 @@ module montgomery_exp_square (clk, rst, start, base_mont, exponent, N, N_prime, 
                 end
             `STATE_SQUARE: begin
                 next_partial_sum = mult_result;
-                if (curr_bit == 1'b1)
+                if (curr_bit == 1'b0)
+                    next_state = `STATE_DUMMY;
+                else if (curr_bit == 1'b1)
                     next_state = `STATE_MULT;
-                else if (counter == 0)
+                //else if (counter == 0)
+                //    next_state = `STATE_FINISH;
+                //else begin
+                //    next_state = `STATE_SQUARE;
+                //    next_counter = counter - 1;
+                //end
+            end
+            `STATE_DUMMY:begin
+                if (counter == 0)
                     next_state = `STATE_FINISH;
                 else begin
                     next_state = `STATE_SQUARE;
-                    next_counter = counter - 1;
+                    next_counter = counter -1;
                 end
             end
-            `STATE_MULT: begin
+            `STATE_MULT:begin
                 next_partial_sum = mult_result;
                 if (counter == 0)
                     next_state = `STATE_FINISH;
