@@ -96,6 +96,8 @@ module montgomery_exp_square (clk, rst, start, base_mont, exponent, N, N_prime, 
                 //    next_counter = counter - 1;
                 //end
             end
+			// Dummy state added to make 
+			// implementation secure
             `STATE_DUMMY:begin
                 if (counter == 0)
                     next_state = `STATE_FINISH;
